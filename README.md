@@ -1,1 +1,1 @@
-# MagicMaze
+python -m SimpleHTTPServer
