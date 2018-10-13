@@ -5,6 +5,7 @@ Project for TC3022 Computer Graphics with Professor Luis Palomino Ramirez
 This is a project based on WebGl Javascript API in order to know and learn about computer graphics.
 The main idea of this project is to create a maze videogame that allow the user to play on different levels through a simple 3D format space.
 
+* Source code on "develop" branch for now
 
 * To run this program in Linux
   * git clone https://github.com/Vlad04/MagicMaze.git 
