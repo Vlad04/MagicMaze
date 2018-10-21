@@ -126,11 +126,11 @@
                 wBall.SetLinearVelocity(lv);
                 
                 // Apply user-directed force.
-                var f = new b2Vec2(keyAxis[0]*wBall.GetMass()*0.25, keyAxis[1]*wBall.GetMass()*0.25);
-                wBall.ApplyImpulse(f, wBall.GetPosition());          
+                var fuerza = new b2Vec2(keyAxis[0]*wBall.GetMass()*0.25, keyAxis[1]*wBall.GetMass()*0.25);
+                wBall.ApplyImpulse(fuerza, wBall.GetPosition());          
                 keyAxis = [0,0];
 
-                // Take a time step.
+                // Move
                 wWorld.Step(1/60, 8, 3);
             }
             
