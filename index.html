@@ -159,13 +159,11 @@
                 camera.position.y += (ballMesh.position.y - camera.position.y) * 0.1;
                 camera.position.z += (5 - camera.position.z) * 0.1;
                 
-                //EN ESTE MOMENTO LA LUZ ESTA EN UN PUNTO FIJO SIN PERSEGUIR A LA BOLA,
-                //SI SE DESCOMENTA ESTO LA LUZ SEGUIRA A LA BOLA
+                //Light following the ball
                 
-                
-                /*light.position.x = camera.position.x;
+                light.position.x = camera.position.x;
                 light.position.y = camera.position.y;
-                light.position.z = camera.position.z - 3.7;*/
+                light.position.z = camera.position.z - 3.7;
             }
 
 
@@ -261,7 +259,7 @@
 
                 // Bind keyboard and resize events.
                 KeyboardJS.bind.axis('left', 'right', 'down', 'up', onMoveKey);
-                KeyboardJS.bind.axis('a', 'd', 's', 'w', onMoveKey);
+
                 $(window).resize(onResize);
                 
 
