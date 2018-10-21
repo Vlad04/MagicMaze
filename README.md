@@ -7,6 +7,7 @@ The main idea of this project is to create a maze videogame that allow the user 
 
 * Source code on "develop" branch for now
 
+
 * To run this program in Linux
   * git clone https://github.com/Vlad04/MagicMaze.git 
     * make run
