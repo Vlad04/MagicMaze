@@ -41,8 +41,10 @@
             // Box2D world variables 
                 wWorld         = undefined,
                 wBall          = undefined;
-
             
+
+            var myScore = 0;
+
             function createPhysicsWorld() {
                 // Create the world object.
                 wWorld = new b2World(new b2Vec2(0, 0), true);
@@ -219,6 +221,8 @@
                         if (mazeX == mazeDimension && mazeY == mazeDimension - 2) { 
                             mazeDimension += 2;
                             gameState = 'fade out';
+                            document.getElementById('score').innerHTML = 'Score: '+(myScore += 100);
+
                         }
                         break;
                 
@@ -232,6 +236,7 @@
                             renderer.render(scene, camera);
                             gameState = 'initialize'
                         }
+                        
                         break;
                         
                 }
@@ -406,6 +411,13 @@
                 padding: 4px;
                 color: white;   
             }
+            #score {
+                color: white;
+                position: fixed;
+                bottom: 30px;
+                right: 30px;
+                font-size: 42px;
+            }
 
             #level {
                 position: absolute;
@@ -446,7 +458,8 @@
     
     -->
     
-    
+        <div id="score"></div>
+
     
      <div id="timerel" style="margin-left:auto; margin-right:auto;text-align: center;width: 15%"></div>
         <!-- The Modal -->
@@ -517,12 +530,28 @@
         }
 
         window.onload = function () {
-            twominutes = 5;
+        
+            twominutes = 20;
             x = document.querySelector("#timerel");
             startTimer(twominutes,x)
         }
         playing = true
         //addEvents();
+    </script>
+    
+    <script src="https://www.gstatic.com/firebasejs/5.5.7/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyCtiF7ADG1nSnaaG9G5JphHDis0U6rtU9c",
+        authDomain: "magicmaze-99704.firebaseapp.com",
+        databaseURL: "https://magicmaze-99704.firebaseio.com",
+        projectId: "magicmaze-99704",
+        storageBucket: "magicmaze-99704.appspot.com",
+        messagingSenderId: "865222029479"
+      };
+      firebase.initializeApp(config);
+      
     </script>
     </body>
 
