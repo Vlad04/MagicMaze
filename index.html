@@ -309,8 +309,80 @@
         </script>
     
         <style>
-        
+            .modal {
+                display: none; /* Hidden by default */
+                position: fixed; /* Stay in place */
+                z-index: 1; /* Sit on top */
+                left: 0;
+                top: 0;
+                width: 100%; /* Full width */
+                height: 100%; /* Full height */
+                background-color: rgb(0,0,0); /* Fallback color */
+                background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+                }
+                
+            /* Modal Content */
+        .modal-content {
+            position: relative;
+            background-color: #fefefe;
+            margin: auto;
+            padding: 0;
+            border: 1px solid #888;
+            width: 30%;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+            -webkit-animation-name: animatetop;
+            -webkit-animation-duration: 0.4s;
+            animation-name: animatetop;
+            animation-duration: 0.4s
+        }
+
+            /* Add Animation */
+            @-webkit-keyframes animatetop {
+                from {top:-300px; opacity:0}
+                to {top:0; opacity:1}
+            }
+
+            @keyframes animatetop {
+                from {top:-300px; opacity:0}
+                to {top:0; opacity:1}
+            }
+
+            /* The Close Button */
+            .close {
+                color: white;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+            }
+
+            .close:hover,
+            .close:focus {
+                color: #000;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+            .modal-header {
+                padding: 2px 16px;
+                background-color: #41d9f4;
+                color: white;
+                text-align: center;
+                height : 20%;
+            }
+
+            .modal-body {padding: 2px 16px;}
+
+            .modal-footer {
+                padding: 2px 16px;
+                background-color:#f4bc42;
+                color: white;
+                text-align: center;
+                height: 20%;
+            }
+            
             body {
+                overflow: hidden;
+                max-height:100%;
                 background: black;
                 margin: 0;
                 padding: 0;
@@ -343,6 +415,7 @@
                 color: yellow;   
                 font-weight: bold;
             }
+            #timerel {color:#ffffff; display: block; margin: 0 auto; }
 
         </style>
         
@@ -356,7 +429,7 @@
         Usar las flechas de arriba, abajo e izquierda para moverse, ahora busca la salida y diviertete.
         <br><br>
     </div>
-    
+        
      <div id='help'>
         Mantenga oprimido 'h' para las instucciones.
     </div>
@@ -364,6 +437,93 @@
     <div id='level'>
         Level 1
     </div>
+    
+    
+    
+    <!--
+    
+    
+    
+    -->
+    
+    
+    
+     <div id="timerel" style="margin-left:auto; margin-right:auto;text-align: center;width: 15%"></div>
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="close">&times;</span>
+                    <h2 class="gamehead"></h2>
+                </div>
+                <div class="modal-footer">
+                    <h2 id="demo" onmouseover="" style="cursor:pointer;">Play Again?</h2>
+                </div>
+            </div>
+
+        </div>
+    <!--canvas id="c" width="2048" height="2048" style="margin-left:auto; margin-right:auto"></canvas-->
+    <script type="text/javascript">
+        // Get the modal
+        var modal = document.getElementById('myModal');
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks the button, open the modal
+        modelfungo = function() {
+            console.log("func called")
+            modal.style.display = "block";
+            x = document.querySelector(".gamehead");
+            x.textContent = "Game Over"
+            
+            
+
+        }
+        document.getElementById("demo").addEventListener("click", myFunction);
+        function myFunction() {
+            document.location.reload();
+        }
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+        //var now = new Date().getTime();
+        function startTimer(duration, display) {
+            var start = Date.now(),
+                diff,
+                minutes,
+                seconds;
+
+            function timer() {
+                if(playing) {
+                    diff = duration - (((Date.now() - start) / 1000) | 0);
+                    minutes = (diff / 60) | 0;
+                    seconds = (diff % 60) | 0;
+                    minutes = minutes < 10 ? "0" + minutes : minutes;
+                    seconds = seconds < 10 ? "0" + seconds : seconds;
+                    display.textContent = "Game ends in " + minutes + ":" + seconds;
+
+                    if (diff <= 0) {
+                        display.textContent = "Game Over";
+                        start = Date.now() + 1000;
+                        playing = false
+                        modelfungo();
+                    }
+                }
+            };
+            timer();
+            setInterval(timer,1000)
+        }
+
+        window.onload = function () {
+            twominutes = 5;
+            x = document.querySelector("#timerel");
+            startTimer(twominutes,x)
+        }
+        playing = true
+        //addEvents();
+    </script>
     </body>
 
 </html>
