@@ -42,7 +42,7 @@
                 wWorld         = undefined,
                 wBall          = undefined;
             
-
+            var playing = true
             var myScore = 0;
 
             function createPhysicsWorld() {
@@ -185,7 +185,7 @@
 
 
             function gameLoop() {
-            
+            if(playing){
                 switch(gameState) {
                 
                     case 'initialize':
@@ -239,6 +239,7 @@
                         
                         break;
                         
+                }
                 }
             
                 requestAnimationFrame(gameLoop);
@@ -490,6 +491,7 @@
             modal.style.display = "block";
             x = document.querySelector(".gamehead");
             x.textContent = "Game Over"
+            
             
             
 
