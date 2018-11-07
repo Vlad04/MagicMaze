@@ -7,7 +7,7 @@
         <script src="keyboard.js"></script>
         <script src="jquery.js"></script>
         <script src="maze.js"></script>
-
+        <script src="https://www.gstatic.com/firebasejs/5.5.2/firebase.js"></script>
         <script>
 
             var camera         = undefined, 
@@ -44,7 +44,19 @@
             
             var playing = true
             var myScore = 0;
-
+            function writeDatabase() {
+                        const preObject = document.getElementById('Usuarios');
+                          const dbRefObject = firebase.database().ref();
+                          firebase.database().ref(document.getElementById('user_name').value).set(myScore.toString());
+                          dbRefObject.once("value", function(snapshot) {
+                            snapshot.forEach(function(child) {
+                              console.log(child.key+": "+child.val());
+                            });
+                          });
+                          console.log("hola "+firebase.database().ref().child("Juan").getKey());
+                          dbRefObject.on('value',snap =>console.log(dbRefObject));
+                          console.log("haaaaaaaaaaaaa");
+            }
             function createPhysicsWorld() {
                 // Create the world object.
                 wWorld = new b2World(new b2Vec2(0, 0), true);
@@ -495,15 +507,19 @@
     
     <body>
     
+    
+     <pre id='Usuarios'></pre>
+
+    <script src="app.js"></script>
     <div id='instructions'>
-        Como jugar:
+        How to play:
         <br><br>
-        Usar las flechas de arriba, abajo e izquierda para moverse, ahora busca la salida y diviertete.
+        Use the keys (up, down, left, right) to move.
         <br><br>
     </div>
         
      <div id='help'>
-        Mantenga oprimido 'h' para las instucciones.
+        Press 'h' to read instructions.
     </div>
 
     <div id='level'>
@@ -532,15 +548,14 @@
                 </div>
                 <div class="modal-footer">
                     <h2 id="demo" onmouseover="" style="cursor:pointer;">Play Again?</h2>
-                    <center><h2>Registra tu puntuacion</h2></center>
+                    <center><h2>Register your score</h2></center>
 
                         <hr>
 
                         <label for="email"><b></b></label>
-                        <input type="text" placeholder="Ingresa nombre de usuario" name="email" required>
+                        <input id="user_name" type="text" placeholder="User name" name="name" required>
 
-
-                        <button type="submit" class="registerbtn">Registrar</button>
+                        <button type="submit" class="registerbtn" onclick="writeDatabase()">Register</button>
                 </div>
             </div>
 
@@ -561,10 +576,6 @@
             modal.style.display = "block";
             x = document.querySelector(".gamehead");
             x.textContent = "Game Over"
-            
-            
-            
-
         }
         document.getElementById("demo").addEventListener("click", myFunction);
         function myFunction() {
@@ -603,7 +614,7 @@
 
         window.onload = function () {
         
-            twominutes = 60;
+            twominutes = 10;
             x = document.querySelector("#timerel");
             startTimer(twominutes,x)
         }
@@ -615,12 +626,12 @@
     <script>
       // Initialize Firebase
       var config = {
-        apiKey: "AIzaSyCtiF7ADG1nSnaaG9G5JphHDis0U6rtU9c",
-        authDomain: "magicmaze-99704.firebaseapp.com",
-        databaseURL: "https://magicmaze-99704.firebaseio.com",
-        projectId: "magicmaze-99704",
-        storageBucket: "magicmaze-99704.appspot.com",
-        messagingSenderId: "865222029479"
+        apiKey: "AIzaSyBfbJaEMIfTJeauh29CcNSrS3wqUQvTFdg",
+    authDomain: "magicmaze-2c8fe.firebaseapp.com",
+    databaseURL: "https://magicmaze-2c8fe.firebaseio.com",
+    projectId: "magicmaze-2c8fe",
+    storageBucket: "magicmaze-2c8fe.appspot.com",
+    messagingSenderId: "1055347234772"
       };
       firebase.initializeApp(config);
       
