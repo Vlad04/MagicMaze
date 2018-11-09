@@ -44,18 +44,22 @@
             
             var playing = true
             var myScore = 0;
+            var ScoreArray=[]
             function writeDatabase() {
                         const preObject = document.getElementById('Usuarios');
                           const dbRefObject = firebase.database().ref();
                           firebase.database().ref(document.getElementById('user_name').value).set(myScore.toString());
                           dbRefObject.once("value", function(snapshot) {
                             snapshot.forEach(function(child) {
-                              console.log(child.key+": "+child.val());
+
+                              ScoreArray.push(child.val()+": "+child.key);
+                              
                             });
+                             ScoreArray.sort(function(a, b){return a - b});
+
+                             console.log(ScoreArray);
                           });
-                          console.log("hola "+firebase.database().ref().child("Juan").getKey());
-                          dbRefObject.on('value',snap =>console.log(dbRefObject));
-                          console.log("haaaaaaaaaaaaa");
+                          
             }
             function createPhysicsWorld() {
                 // Create the world object.
@@ -426,6 +430,14 @@
                 padding: 4px;
                 color: white;   
             }
+            
+            #leaderboard{
+                padding: 2px 16px;
+                background-color:#f4bc42;
+                color: white;
+                text-align: center;
+                height: 20%;
+            }
             #score {
                 color: white;
                 position: fixed;
@@ -518,7 +530,7 @@
         <br><br>
     </div>
         
-     <div id='help'>
+    <div id='help'>
         Press 'h' to read instructions.
     </div>
 
@@ -556,6 +568,10 @@
                         <input id="user_name" type="text" placeholder="User name" name="name" required>
 
                         <button type="submit" class="registerbtn" onclick="writeDatabase()">Register</button>
+                        <div id='leaderboard'>
+                            Press 'Q' to see leader board
+                        </div>
+                        
                 </div>
             </div>
 
@@ -614,7 +630,7 @@
 
         window.onload = function () {
         
-            twominutes = 10;
+            twominutes = 1;
             x = document.querySelector("#timerel");
             startTimer(twominutes,x)
         }
