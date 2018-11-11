@@ -45,19 +45,71 @@
             var playing = true
             var myScore = 0;
             var ScoreArray=[]
+            var best5=[]
+            var count=1;
+                
+                
+                
             function writeDatabase() {
                         const preObject = document.getElementById('Usuarios');
-                          const dbRefObject = firebase.database().ref();
+                          const dbRefObject = firebase.database().ref().orderByValue();
                           firebase.database().ref(document.getElementById('user_name').value).set(myScore.toString());
                           dbRefObject.once("value", function(snapshot) {
                             snapshot.forEach(function(child) {
-
-                              ScoreArray.push(child.val()+": "+child.key);
-                              
+                              var indexArray1=[]
+                              indexArray1.push(child.key);
+                              indexArray1.push(child.val());
+                              ScoreArray.push(child.key+": "+child.val());                    
                             });
-                             ScoreArray.sort(function(a, b){return a - b});
+                            ScoreArray.reverse();
+                            best5=ScoreArray.slice(0,5);
+                            console.log(best5);
+                            
+                            var ul = document.createElement('ol');
+                
+                            document.getElementById('myDIV').appendChild(ul);
 
-                             console.log(ScoreArray);
+                          });
+                          
+            }
+            
+            function showLeaderBoard(){
+
+                 var x = document.getElementById("myDIV");
+                    if (x.style.display === "block") {
+                        x.style.display = "none";
+                    } else {
+                        x.style.display = "block";
+                    }
+                    
+                       const preObject = document.getElementById('Usuarios');
+                          const dbRefObject = firebase.database().ref().orderByValue();
+
+                          dbRefObject.once("value", function(snapshot) {
+                            snapshot.forEach(function(child) {
+                              var indexArray1=[]
+                              indexArray1.push(child.key);
+                              indexArray1.push(child.val());
+                              ScoreArray.push(child.key+": "+child.val());                    
+                            });
+                            ScoreArray.reverse();
+                            best5=ScoreArray.slice(0,5);
+                            console.log(best5);
+                            
+                            var ul = document.createElement('ol');
+                
+                            document.getElementById('myDIV').appendChild(ul);
+
+                            if(count<2){
+                            best5.forEach(function (item) {
+                                var li = document.createElement('li');
+                                ul.appendChild(li);
+                                count=count+1;
+
+                                li.innerHTML += item;});
+                                }
+
+
                           });
                           
             }
@@ -445,7 +497,18 @@
                 right: 30px;
                 font-size: 42px;
             }
-
+            #myDIV {
+                display: none;
+                padding: 50px 50px;
+                text-align: center;
+                background-color: #41d9f4;
+                margin-top: 97px;      
+                margin-right: 40px;        
+                position: absolute;
+                right: 0;
+                width: 410px;
+                height: 415px;
+           }
             #level {
                 position: absolute;
                 left: 0px;
@@ -498,6 +561,18 @@
                 width: 100%;
                 opacity: 0.9;
             }
+            
+            .leaderboard{
+                background-color: #f44336;
+                color: white;
+                padding: 16px 20px;
+                margin: 8px 0;
+                border: none;
+                cursor: pointer;
+                width: 100%;
+                opacity: 0.9;
+            
+            }
 
             .registerbtn:hover {
                 opacity: 1;
@@ -519,8 +594,12 @@
     
     <body>
     
-    
-     <pre id='Usuarios'></pre>
+
+
+	<embed src="shootstart.mp3" autostart="true" loop="true" width="2" height="0">
+      </embed>
+	
+   
 
     <script src="app.js"></script>
     <div id='instructions'>
@@ -529,7 +608,12 @@
         Use the keys (up, down, left, right) to move.
         <br><br>
     </div>
-        
+    
+    <div id="myDIV">
+    <ul class="list-group">
+    
+    </ul>
+    </div>
     <div id='help'>
         Press 'h' to read instructions.
     </div>
@@ -538,13 +622,6 @@
         Level 1
     </div>
     
-    
-    
-    <!--
-    
-    
-    
-    -->
     
         <div id="score"></div>
 
@@ -568,9 +645,8 @@
                         <input id="user_name" type="text" placeholder="User name" name="name" required>
 
                         <button type="submit" class="registerbtn" onclick="writeDatabase()">Register</button>
-                        <div id='leaderboard'>
-                            Press 'Q' to see leader board
-                        </div>
+                        
+                        <button type="button" class="leaderboard" onclick="showLeaderBoard()" > See leaderboard </button>
                         
                 </div>
             </div>
@@ -630,7 +706,7 @@
 
         window.onload = function () {
         
-            twominutes = 1;
+            twominutes = 2;
             x = document.querySelector("#timerel");
             startTimer(twominutes,x)
         }
