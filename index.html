@@ -47,11 +47,13 @@
             var ScoreArray=[]
             var best5=[]
             var count=1;
+            var buttoncount=1;
                 
                 
                 
             function writeDatabase() {
                         const preObject = document.getElementById('Usuarios');
+                        buttoncount=buttoncount+1;
                           const dbRefObject = firebase.database().ref().orderByValue();
                           firebase.database().ref(document.getElementById('user_name').value).set(myScore.toString());
                           dbRefObject.once("value", function(snapshot) {
@@ -61,6 +63,7 @@
                               indexArray1.push(child.val());
                               ScoreArray.push(child.key+": "+child.val());                    
                             });
+                          
                             ScoreArray.reverse();
                             best5=ScoreArray.slice(0,5);
                             console.log(best5);
@@ -68,6 +71,15 @@
                             var ul = document.createElement('ol');
                 
                             document.getElementById('myDIV').appendChild(ul);
+
+                            if(buttoncount<2){
+                            best5.forEach(function (item) {
+                                var li = document.createElement('li');
+                                ul.appendChild(li);
+                                count=count+1;
+
+                                li.innerHTML += item;});
+                                }
 
                           });
                           
@@ -509,6 +521,8 @@
                 width: 410px;
                 height: 415px;
            }
+         
+           
             #level {
                 position: absolute;
                 left: 0px;
@@ -610,6 +624,8 @@
     </div>
     
     <div id="myDIV">
+    <h1 style="color:#FFFFFF; text-align:center; text-transform: uppercase; margin:10px; padding:0;"><span>Leader Board</span></h1>
+
     <ul class="list-group">
     
     </ul>
@@ -706,7 +722,7 @@
 
         window.onload = function () {
         
-            twominutes = 2;
+            twominutes = 70;
             x = document.querySelector("#timerel");
             startTimer(twominutes,x)
         }
